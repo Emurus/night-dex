@@ -136,40 +136,17 @@ function limit(str, max) {
 }
 
 function printPokemon(p, maxlen, options) {
-
-    const ABREV = {
-        "hp": "HP",
-        "atk": "ATK",
-        "def": "DEF",
-        "sp_atk": "spATK",
-        "sp_def": "spDEF",
-        "speed": "SPEED",
-    };
-
     const name = `${p.names.en.toUpperCase()} #${p.national_id}`;
     const type = unifont('TYPE:', 'sansbold') + p.types.join('/');
-    const abilities = unifont('ABIL:', 'sansbold') + p.abilities.map(a => a.name + (a.hidden ? '*' : '')).join('/');
-    const base_stats = unifont('BASE:', 'sansbold') + Object.keys(p.base_stats).map(a => `${unifont(ABREV[a], 'normal')} ${p.base_stats[a]}`).join('|');
-    const ev_yield = unifont('EVYIELD:', 'sansbold') + Object.keys(p.ev_yield).map(a => `${unifont(ABREV[a], 'normal')} ${p.ev_yield[a]}`).join('|');
-    // const link = `pokemondb.net/pokedex/${p.names.en.toLowerCase()}`;
-    // const link = `pokemon.wikia.com/wiki/${p.names.en.toLowerCase()}`;
-    const link = `bulbapedia.bulbagarden.net/wiki/${p.names.en.toLowerCase()}`;
     const dexGen = Object.keys(p.pokedex_entries).random();
-    const quote = unifont(`🗣"${p.pokedex_entries[dexGen].en}"`, 'sansitalic');
-
-    const evolutionsFrom = p.evolution_from ? `FROM:${p.evolution_from}` : '';
+    const quote = unifont(`"${p.pokedex_entries[dexGen].en}"`, 'sansitalic');
     const evolutionsTo = printEvolution(p);
 
     const out = [
         name,
         type,
-        abilities,
-        base_stats,
-        evolutionsFrom,
         evolutionsTo,
-        // ev_yield,
         quote, // index: 6 (update the quoteIndex variable)
-        link,
     ];
 
     //limit the quote length
