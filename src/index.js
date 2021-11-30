@@ -136,8 +136,8 @@ function limit(str, max) {
 }
 
 function printPokemon(p, maxlen, options) {
-    const name = `${p.names.en.toUpperCase()} #${p.national_id}`;
-    const type = unifont('TYPE:', 'sansbold') + p.types.join('/');
+    const name = `#${p.national_id} ${p.names.en}`;
+    const type = p.types.join('/');
     const dexGen = Object.keys(p.pokedex_entries).random();
     const quote = unifont(`"${p.pokedex_entries[dexGen].en}"`, 'sansitalic');
     const evolutionsTo = printEvolution(p);
@@ -156,15 +156,15 @@ function printPokemon(p, maxlen, options) {
         if (overflow > 0) out[quoteIndex] = limit(out[quoteIndex], out[quoteIndex].length - overflow);
     }
 
-    return out.join(' ');
+    return out.join(' | ');
 }
 
 function printEvolution(p) {
     if (p.evolutions.length) {
-        return 'EVOLUTION:' + p.evolutions.map(e => {
+        return 'evo:' + p.evolutions.map(e => {
             var s = [];
             if (e.to) s.push(`${e.to}`);
-            if (e.level) s.push(`Lvl:${e.level}`);
+            if (e.level) s.push(`Lvl${e.level}`);
             if (e.conditions) s.push(`Cond:${e.conditions}`);
             if (e.level_up) s.push(`LvlUp:${e.level_up}`);
             if (e.trade) s.push(`Trade:${e.trade}`);
@@ -172,9 +172,9 @@ function printEvolution(p) {
             if (e.hold_item) s.push(`HoldItem:${e.hold_item}`);
             if (e.move_learned) s.push(`MoveLearned:${e.move_learned}`);
             return s.join(' ');
-        }).join(',');
+        }).join(', ');
     }
-    return 'EVOLUTION: none';
+    return 'evo: none';
 }
 
 
